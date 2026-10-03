@@ -1,0 +1,375 @@
+# Especificações de Caso de Uso — SubTracker
+
+## 1. Objetivo do documento
+
+Registrar os casos de uso do sistema SubTracker no formato de especificação padronizada, acompanhados do diagrama UML. Cada caso de uso segue o mesmo conjunto de campos para facilitar a correção e a reutilização pelo grupo.
+
+## 2. Atores
+
+| Ator | Tipo | Descrição |
+| --- | --- | --- |
+| Usuário | Primário | Pessoa autenticada que utiliza o SubTracker para gerir as suas assinaturas e divisões de custos. |
+| Visitante | Primário | Pessoa não autenticada que acede à plataforma para se cadastrar ou efetuar login. |
+| API Externa de Câmbio | Secundário | Serviço externo (ex: AwesomeAPI) consultado de forma automática para obter cotações de moedas em tempo real. |
+
+## 3. Catálogo de casos de uso
+
+| ID | Nome | Atores | Prioridade |
+| --- | --- | --- | --- |
+| UC01 | Cadastrar-se | Visitante | Alta |
+| UC02 | Fazer Login | Visitante | Alta |
+| UC03 | Fazer Logout | Usuário | Média |
+| UC04 | Cadastrar Assinatura | Usuário | Alta |
+| UC05 | Editar Assinatura | Usuário | Alta |
+| UC06 | Excluir Assinatura | Usuário | Média |
+| UC07 | Consultar/Buscar Assinaturas | Usuário | Alta |
+| UC08 | Visualizar Dashboard | Usuário | Alta |
+| UC09 | Vincular Pessoa (Divisão) | Usuário | Média |
+| UC10 | Conversão de Moeda Estrangeira | Usuário, API Externa de Câmbio | Média |
+| UC11 | Gerar Relatório de Gastos | Usuário | Baixa |
+| UC12 | Editar Perfil | Usuário | Baixa |
+
+**Relacionamentos:** *(pendente de definição pelo grupo — ver observação sobre `<<include>>` com UC02, discutida à parte)*
+
+## 4. Diagrama de casos de uso
+
+![Diagrama de Casos de Uso — SubTracker](diagrama-casos-de-uso.png)
+
+*Figura 1 — Diagrama de casos de uso (UML) do SubTracker.*
+
+> Substituir esta imagem pelo arquivo exportado do draw.io (`diagrama-casos-de-uso.png` ou `.svg`), salvo na mesma pasta `docs/modelagem/casos-de-uso/`. O arquivo `.drawio` editável também deve ser versionado junto.
+
+## 5. Especificações
+
+### Especificação UC01 — Cadastrar-se
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC01 |
+| Nome do caso de uso | Cadastrar-se |
+| Prioridade | Alta |
+| Complexidade | Baixa |
+| Atores primários | Visitante |
+| Atores secundários | — |
+| Descrição breve | Permite que um novo visitante crie uma conta no sistema fornecendo seus dados cadastrais. |
+| Pré-condições | O visitante não deve estar autenticado na plataforma. |
+| Pós-condições de sucesso | O usuário é cadastrado no banco de dados e redirecionado para a tela de login. |
+| Pós-condições de falha | Nenhum registro de usuário é criado; o formulário permanece disponível para correção. |
+| Requisitos especiais | Senha armazenada de forma criptografada. |
+| Frequência de uso | Ocasional (pelo menos uma vez por utilizador). |
+| Observações | Essencial para o fluxo de autenticação inicial. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O visitante clica em "Criar Conta".
+2. O sistema exibe o formulário de cadastro (nome, e-mail, senha e confirmação de senha).
+3. O visitante preenche os campos e clica em "Cadastrar".
+4. O sistema valida os dados inseridos.
+5. O sistema cria o registro de usuário no banco de dados com a senha criptografada.
+6. O sistema exibe uma mensagem de sucesso e redireciona para a tela de login.
+
+**Fluxos de exceção**
+- E1. E-mail já cadastrado (passo 4): o sistema exibe alerta informando o conflito.
+- E2. Senhas não coincidentes ou fracas (passo 4): o sistema solicita a correção.
+
+---
+
+### Especificação UC02 — Fazer Login
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC02 |
+| Nome do caso de uso | Fazer Login |
+| Prioridade | Alta |
+| Complexidade | Baixa |
+| Atores primários | Visitante |
+| Atores secundários | — |
+| Descrição breve | Autentica o usuário no sistema para concessão de acesso às funcionalidades protegidas. |
+| Pré-condições | O usuário deve possuir uma conta previamente cadastrada (UC01). |
+| Pós-condições de sucesso | A sessão do usuário é iniciada e ele é direcionado para o Dashboard (UC08). |
+| Pós-condições de falha | Nenhuma sessão é criada; as credenciais permanecem inválidas. |
+| Requisitos especiais | O retorno de erro é genérico, sem revelar qual campo está incorreto. |
+| Frequência de uso | Frequente (a cada início de sessão). |
+| Observações | Requisito de acesso e segurança das rotas protegidas. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O visitante acessa a tela de login.
+2. O visitante informa o e-mail e a senha e clica em "Entrar".
+3. O sistema valida as credenciais fornecidas.
+4. O sistema inicia a sessão autenticada (cookies/session).
+5. O sistema redireciona o usuário para o Dashboard (UC08).
+
+**Fluxos de exceção**
+- E1. Credenciais inválidas (passo 3): o sistema exibe uma mensagem de erro genérica.
+
+---
+
+### Especificação UC03 — Fazer Logout
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC03 |
+| Nome do caso de uso | Fazer Logout |
+| Prioridade | Média |
+| Complexidade | Baixa |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Encerra a sessão ativa do usuário autenticado no sistema. |
+| Pré-condições | O usuário deve estar autenticado no sistema. |
+| Pós-condições de sucesso | A sessão é destruída e o acesso volta a ser restrito. |
+| Pós-condições de falha | Não se aplica (operação simples, sem ponto crítico de falha). |
+| Frequência de uso | Frequente (ao encerrar o uso). |
+| Observações | Implementação padrão via gestão de sessões do Django. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário clica na opção "Sair" do menu.
+2. O sistema encerra a sessão ativa do usuário.
+3. O sistema redireciona para a página de login.
+
+---
+
+### Especificação UC04 — Cadastrar Assinatura
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC04 |
+| Nome do caso de uso | Cadastrar Assinatura |
+| Prioridade | Alta |
+| Complexidade | Média |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Permite ao usuário registrar uma nova assinatura ou gasto recorrente no sistema. |
+| Pré-condições | Usuário autenticado (UC02). |
+| Pós-condições de sucesso | A nova assinatura é gravada e contabilizada nas métricas do usuário. |
+| Pós-condições de falha | Nenhum registro é gravado; o formulário mantém os dados preenchidos para correção. |
+| Frequência de uso | Frequente. |
+| Observações | Funcionalidade central do MVP (Core Feature). |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário aciona a opção "Nova Assinatura".
+2. O sistema exibe o formulário de cadastro.
+3. O usuário preenche os dados: nome, valor, moeda (BRL/USD/EUR), ciclo (mensal/anual), categoria, data do próximo vencimento e indicação opcional de período de teste (free trial).
+4. O usuário clica em "Salvar".
+5. O sistema valida os dados e grava o registro na base de dados.
+6. O sistema exibe confirmação e redireciona para a listagem/dashboard.
+
+**Fluxos de exceção**
+- E1. Dados obrigatórios inválidos (passo 5): o sistema destaca os erros e impede o salvamento.
+
+---
+
+### Especificação UC05 — Editar Assinatura
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC05 |
+| Nome do caso de uso | Editar Assinatura |
+| Prioridade | Alta |
+| Complexidade | Baixa |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Permite a atualização dos dados de uma assinatura já existente. |
+| Pré-condições | Usuário autenticado e a assinatura pertencer à conta do usuário. |
+| Pós-condições de sucesso | Os dados atualizados da assinatura são salvos no banco. |
+| Pós-condições de falha | O registro permanece com os dados anteriores; o formulário exibe os erros. |
+| Frequência de uso | Ocasional. |
+| Observações | Permite reajuste de valores e renovações periódicas. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário seleciona uma assinatura na listagem e clica em "Editar".
+2. O sistema exibe o formulário preenchido com os dados atuais.
+3. O usuário altera as informações desejadas e clica em "Salvar Alterações".
+4. O sistema valida as novas informações e atualiza o registro.
+5. O sistema exibe mensagem de sucesso.
+
+**Fluxos de exceção**
+- E1. Dados inválidos (passo 4): o sistema exibe os alertas de erro no formulário.
+
+---
+
+### Especificação UC06 — Excluir Assinatura
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC06 |
+| Nome do caso de uso | Excluir Assinatura |
+| Prioridade | Média |
+| Complexidade | Baixa |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Permite a remoção permanente de um registro de assinatura cadastrado. |
+| Pré-condições | Usuário autenticado. |
+| Pós-condições de sucesso | A assinatura é removida do banco de dados e desvinculada dos relatórios e totais. |
+| Pós-condições de falha | Nenhuma alteração é realizada; a assinatura permanece ativa. |
+| Frequência de uso | Rara. |
+| Observações | Requer caixa de diálogo de confirmação prévia na UI. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário clica na opção "Excluir" em relação a uma assinatura específica.
+2. O sistema exibe uma caixa de confirmação para evitar exclusões acidentais.
+3. O usuário confirma a exclusão.
+4. O sistema remove a assinatura da base de dados e exibe confirmação.
+
+---
+
+### Especificação UC07 — Consultar/Buscar Assinaturas
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC07 |
+| Nome do caso de uso | Consultar/Buscar Assinaturas |
+| Prioridade | Alta |
+| Complexidade | Baixa |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Permite a listagem, busca por nome e filtragem de assinaturas cadastradas. |
+| Pré-condições | Usuário autenticado. |
+| Pós-condições de sucesso | O sistema apresenta a lista filtrada conforme os critérios informados. |
+| Pós-condições de falha | Não se aplica (a consulta sempre retorna um resultado, incluindo lista vazia). |
+| Frequência de uso | Frequente. |
+| Observações | Filtros aplicados diretamente na listagem principal. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário acessa a página "Minhas Assinaturas".
+2. O sistema exibe todas as assinaturas ativas do usuário.
+3. O usuário digita um termo de busca no campo de pesquisa ou seleciona um filtro (por categoria ou status de vencimento).
+4. O sistema processa os critérios e atualiza a listagem em tempo real ou mediante submissão.
+
+**Fluxos alternativos**
+- A1. Nenhum resultado encontrado: o sistema exibe uma mensagem indicativa no painel.
+
+---
+
+### Especificação UC08 — Visualizar Dashboard
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC08 |
+| Nome do caso de uso | Visualizar Dashboard |
+| Prioridade | Alta |
+| Complexidade | Média |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Apresenta a visão geral consolidada das finanças recorrentes do usuário com destaques visuais de renovação. |
+| Pré-condições | Usuário autenticado. |
+| Pós-condições de sucesso | Totais e alertas de vencimento exibidos corretamente. |
+| Pós-condições de falha | Não se aplica (operação de leitura). |
+| Frequência de uso | Alta (ecrã inicial após login). |
+| Observações | Apresenta cartões de totais acumulados e destaques de vencimento. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário acessa o Dashboard do sistema.
+2. O sistema calcula a soma dos gastos mensais e anuais do usuário.
+3. O sistema identifica as assinaturas com vencimento nos próximos 7 dias e os períodos de teste (free trial) prestes a vencer.
+4. O sistema exibe os cartões de totais acumulados e destaca visualmente no painel os alertas de vencimento próximo.
+
+---
+
+### Especificação UC09 — Vincular Pessoa a uma Assinatura (Divisão de Custo)
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC09 |
+| Nome do caso de uso | Vincular Pessoa a uma Assinatura (Divisão de Custo) |
+| Prioridade | Média |
+| Complexidade | Média |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Associa pessoas a uma assinatura para realizar o cálculo automático do valor proporcional de cada participante. |
+| Pré-condições | Usuário autenticado e assinatura previamente cadastrada (UC04). |
+| Pós-condições de sucesso | A pessoa é vinculada à assinatura e a cota-parte individual é atualizada no painel. |
+| Pós-condições de falha | A pessoa não é vinculada; a divisão permanece inalterada. |
+| Frequência de uso | Ocasional. |
+| Observações | Cálculo dinâmico da cota-parte proporcional por integrante. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário seleciona uma assinatura e clica em "Gerenciar Divisão / Vincular Pessoa".
+2. O sistema exibe os vinculados atuais e um formulário para inclusão.
+3. O usuário informa o nome/e-mail da pessoa a ser vinculada e o tipo de divisão (ex: igualitária).
+4. O usuário clica em "Adicionar".
+5. O sistema calcula a cota-parte de cada integrante (valor total da assinatura ÷ número de pessoas) e atualiza a exibição.
+
+---
+
+### Especificação UC10 — Visualizar Conversão de Moeda Estrangeira
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC10 |
+| Nome do caso de uso | Visualizar Conversão de Moeda Estrangeira |
+| Prioridade | Média |
+| Complexidade | Alta |
+| Atores primários | Usuário |
+| Atores secundários | API Externa de Câmbio |
+| Descrição breve | Realiza a consulta em tempo real da cotação de moedas estrangeiras via API para apresentar os valores convertidos em BRL ao carregar as telas do sistema. |
+| Pré-condições | Usuário autenticado e existirem assinaturas cadastradas em moeda estrangeira (ex: USD, EUR). |
+| Pós-condições de sucesso | Os valores em BRL são exibidos atualizados com base na cotação obtida. |
+| Pós-condições de falha | O sistema exibe o valor convertido com a cotação de fallback configurada, sinalizando visualmente que a taxa é de contingência. |
+| Requisitos especiais | Tratamento de timeout/erro HTTP via try/except; cotação de fallback pré-definida. |
+| Frequência de uso | Frequente (ao carregar moedas em USD/EUR). |
+| Observações | Consumo da API externa com mecanismo de fallback para contingência. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário acessa a página do Dashboard ou de Detalhes da Assinatura cadastrada em moeda estrangeira.
+2. O sistema dispara uma requisição HTTP via backend para a API pública de cotação (AwesomeAPI).
+3. A API externa retorna o valor atualizado da cotação do dia.
+4. O sistema calcula e exibe o valor equivalente em BRL na tela ao lado do valor original.
+
+**Fluxos de exceção**
+- E1. Indisponibilidade da API externa (timeout/falha): o sistema trata o erro e utiliza a cotação padrão de fallback, alertando visualmente que a taxa é de contingência.
+
+---
+
+### Especificação UC11 — Gerar Relatório de Gastos
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC11 |
+| Nome do caso de uso | Gerar Relatório de Gastos |
+| Prioridade | Baixa |
+| Complexidade | Média |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Emite um relatório consolidado com o demonstrativo detalhado dos gastos recorrentes conforme filtros de período e categoria. |
+| Pré-condições | Usuário autenticado. |
+| Pós-condições de sucesso | O relatório é gerado e exibido em tela ou disponibilizado para visualização. |
+| Pós-condições de falha | O relatório não é gerado; os filtros permanecem na tela para ajuste. |
+| Frequência de uso | Ocasional (mensal/anual). |
+| Observações | Consolidação de dados filtrados para análise financeira. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário acessa a opção "Relatórios".
+2. O usuário seleciona o período de análise (ex: mês corrente, ano corrente) e/ou categorias específicas.
+3. O usuário clica em "Gerar Relatório".
+4. O sistema consolida as informações da base de dados e exibe o demonstrativo sumarizado dos gastos com totais agrupados.
+
+---
+
+### Especificação UC12 — Editar Perfil
+
+| Campo | Valor |
+| --- | --- |
+| Identificador | UC12 |
+| Nome do caso de uso | Editar Perfil |
+| Prioridade | Baixa |
+| Complexidade | Baixa |
+| Atores primários | Usuário |
+| Atores secundários | — |
+| Descrição breve | Permite ao usuário alterar suas informações pessoais cadastradas, como nome, e-mail e senha de acesso. |
+| Pré-condições | Usuário autenticado. |
+| Pós-condições de sucesso | Os dados do perfil são atualizados na base de dados. |
+| Pós-condições de falha | Nenhuma alteração é persistida; o formulário exibe os erros. |
+| Requisitos especiais | Validação de unicidade de e-mail; validação de força da nova senha. |
+| Frequência de uso | Rara. |
+| Observações | Atualização de dados pessoais e alteração de senha. |
+
+**Fluxo principal (cenário de sucesso)**
+1. O usuário clica em "Meu Perfil" ou "Configurações da Conta".
+2. O sistema exibe o formulário preenchido com as informações atuais (nome e e-mail).
+3. O usuário altera os dados desejados (e optativamente preenche os campos de nova senha).
+4. O usuário clica em "Salvar Alterações".
+5. O sistema valida os novos dados informados.
+6. O sistema atualiza o registro do usuário na base de dados e exibe mensagem de confirmação.
+
+**Fluxos de exceção**
+- E1. E-mail em uso por outro usuário (passo 5): o sistema impede a alteração e exibe alerta de conflito.
+- E2. Senha atual incorreta / nova senha fraca (passo 5): o sistema destaca os erros para correção.
