@@ -3,7 +3,7 @@
 ## 1. API Escolhida e Finalidade
 
 - **API Externa:** AwesomeAPI (Economia / Cotação de Moedas).
-- **Finalidade:** obter as taxas de câmbio atualizadas de moedas estrangeiras (USD e EUR) em relação à moeda base (BRL). A integração permite ao SubTracker converter e exibir em tempo real o custo total das assinaturas internacionais cadastradas pelo utilizador em Reais (R$) no Dashboard e nos relatórios de gastos (UC08 e UC10).
+- **Finalidade:** Obter as taxas de câmbio atualizadas de moedas estrangeiras (USD e EUR) em relação ao Real (BRL). Essa integração permite que o SubTracker converta e mostre em tempo real o valor total das assinaturas internacionais cadastradas pelo utilizador em Reais (R$), no Dashboard e nos relatórios de gastos (UC08 e UC10).
 
 ## 2. Endpoints Consumidos e Parâmetros
 
