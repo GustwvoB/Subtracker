@@ -35,13 +35,13 @@
 
 ## 1. Descrição do projeto
 
-O **SubTracker** é uma solução web desenvolvida para resolver a falta de controle centralizado e a fragmentação financeira no acompanhamento de assinaturas e despesas recorrentes. Atualmente, os utilizadores dependem do acompanhamento manual de extratos bancários ou da memória para monitorizar serviços como plataformas de streaming, ferramentas de produtividade, armazenamento em nuvem e licenças de software, o que resulta frequentemente em cobranças esquecidas, acumulação de serviços não utilizados e falta de previsibilidade do orçamento mensal.
+O SubTracker é uma plataforma web criada para acabar com o descontrole e a bagunça no acompanhamento de assinaturas e despesas recorrentes. Hoje em dia, a maioria das pessoas ainda depende de checar extratos bancários manualmente ou de usar a própria memória para gerenciar serviços como streaming, ferramentas de trabalho, armazenamento em nuvem e licenças de software. O resultado disso costuma ser o mesmo: cobranças esquecidas, serviços acumulados sem uso e zero previsibilidade no orçamento do mês.
 
-Diferenciando-se de aplicações tradicionais de mercado (como *Bobby* ou *Subscript*), o SubTracker foca-se na resolução de dois problemas reais e recorrentes através de funcionalidades chave inovadoras: a **divisão proporcional de custos entre pessoas** e a **conversão automática de câmbio em tempo real**.
+Para se destacar de aplicativos tradicionais do mercado (como Bobby ou Subscript), o SubTracker foca na solução de dois problemas muito comuns do dia a dia através de recursos práticos: a divisão proporcional de custos entre pessoas e a conversão automática de moedas em tempo real.
 
-A **divisão de custos** permite registar e gerir o rateio de serviços partilhados (como planos familiares de streaming, licenças de software em equipa ou contas de habititação) com familiares, amigos ou colegas. O utilizador pode visualizar com clareza o valor total do serviço e a parcela exata sob a responsabilidade de cada participante, eliminando conflitos e facilitando a cobrança das partes devidas.
+A divisão de custos permite cadastrar e gerenciar o valor de serviços compartilhados com familiares, amigos ou colegas de trabalho — como planos familiares de streaming, licenças em equipe ou até contas da casa. O usuário consegue enxergar com clareza o valor total do serviço e a fatia exata que cabe a cada participante, o que evita desentendimentos e facilita na hora de cobrar a parte de cada um.
 
-Adicionalmente, o sistema aborda a complexidade das assinaturas internacionais com a **conversão dinâmica de câmbio**. Ao consumir cotações atualizadas em tempo real via API externa (AwesomeAPI), o SubTracker converte automaticamente pagamentos em moedas estrangeiras (como USD e EUR) para a moeda base do utilizador (BRL). Isto proporciona uma visão financeira precisa no *Dashboard*, protegendo o utilizador de variações cambiais e permitindo o planeamento exato do impacto real dessas assinaturas no seu orçamento diário.
+Além disso, o sistema resolve a complicação das assinaturas internacionais com a conversão cambial dinâmica. Ao buscar cotações atualizadas em tempo real por meio de uma integração com a AwesomeAPI, o SubTracker converte automaticamente pagamentos em moedas estrangeiras (como dólar e euro) para a moeda principal do usuário (BRL). Com essa informação ajustada direto no Dashboard, o usuário se protege das oscilações do câmbio e consegue planejar com precisão o peso real dessas assinaturas no seu orçamento 
 
 ### Objetivos
 
@@ -104,7 +104,7 @@ Adicionalmente, o sistema aborda a complexidade das assinaturas internacionais c
 
 ## 5. Arquitetura
 
-*O SubTracker adota uma arquitetura monolítica organizada em camadas bem definidas, promovendo a separação de responsabilidades, facilidade de manutenção e alinhamento com os princípios REST.*
+O SubTracker utiliza uma arquitetura centralizada organizada em camadas claras. Essa estrutura garante a separação de responsabilidades, facilita a manutenção do código e segue as boas práticas do padrão REST.*
 
 ```text
 [Usuário] ──> [Frontend: Django Templates + JS] ──> [Backend: Django REST Framework] ──> [Banco de Dados: PostgreSQL]
@@ -205,7 +205,7 @@ Documentação completa: [A documentação interativa com Swagger/ReDoc será di
 
 ### Declaração de uso
 
-- **Houve uso de IA neste projeto?** Sim, a inteligência artificial foi utilizada pontualmente como ferramenta de apoio e consultoria técnica durante o planejamento e estruturação da documentação.
+- **Houve uso de IA neste projeto?** Sim, a inteligência artificial foi utilizada como ferramenta de apoio e consultoria técnica durante o planejamento e estruturação da documentação.
 - **Ferramentas utilizadas:** Gemini e Claude.
 - **Finalidade:** Esclarecimento de dúvidas técnicas sobre a sintaxe do Django, auxílio na formatação de tabelas e listas em Markdown e apoio na organização visual do documento README.md.
 - **O que NÃO foi delegado à IA:** A concepção da ideia, a definição do problema, a regra de negócio do rateio de custos, o levantamento dos requisitos funcionais e não funcionais, a arquitetura do sistema e as decisões de modelagem de dados, todas elaboradas e validadas exclusivamente pelo grupo.
