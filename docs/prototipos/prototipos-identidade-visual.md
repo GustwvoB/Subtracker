@@ -3,22 +3,22 @@
 ## 1. Nome do Projeto e Proposta Visual
 
 - **Nome Oficial:** SubTracker.
-- **Proposta Visual:** Dashboard Clean & Tech SaaS. A interface prioriza o minimalismo funcional com fundo claro (para legibilidade no dia a dia), cartões de resumo com cantos suavemente arredondados, contrastes marcantes nos call-to-actions (CTAs) e gráficos limpos para visualização rápida de custos e vencimentos.
+- **Proposta Visual:** Dashboard Clean & Tech SaaS. A interface prioriza o minimalismo funcional com fundo claro (para legibilidade no dia a dia), cartões de resumo com cantos arredondados, contrastes marcantes nos call-to-actions (CTAs) e gráficos limpos para visualização rápida de custos e vencimentos.
 - **Ferramenta de Prototipagem:** Figma.
 
 ## 2. Paleta de Cores
 
-A paleta combina o Roxo/Violeta (tecnologia, gestão moderna de SaaS/assinaturas) com o Azul Profundo (confiança e estabilidade financeira), complementada por tons neutros e cores de feedback operacional.
+A paleta combina o Roxo (tecnologia, gestão moderna de SaaS/assinaturas) com o Azul (confiança e estabilidade financeira), acompanhados de tons neutros que ajudam a manter um visual equilibrado e agradável.
 
-| Aplicação / Função | Nome da Cor | Código Hex | Descrição / Uso |
-| --- | --- | --- | --- |
-| Primária (Marca/Destaque) | Roxo SaaS (Electric Purple) | `#6C5CE7` | Botões principais, links ativos, elementos em foco. |
-| Secundária (Apoio) | Azul Finanças (Deep Navy) | `#2D3436` | Títulos, cabeçalhos de tabelas, elementos institucionais. |
-| Fundo de Tela (Background) | Cinza Claro (Soft Background) | `#F8F9FA` | Fundo geral da aplicação (reduz fadiga visual). |
-| Superfície / Cartões | Branco Puro (Card Surface) | `#FFFFFF` | Fundo dos cards do Dashboard, modais e tabelas. |
-| Texto Principal | Grafite Escuro (Dark Neutral) | `#1E293B` | Textos de corpo, rótulos e valores principais. |
-| Alerta / Próximo Vencimento | Laranja Alerta (Warning Orange) | `#E17055` | Notificação de assinaturas prestes a vencer. |
-| Sucesso / Status Ativo | Verde Concluído (Success Green) | `#00B894` | Status de assinaturas ativas, badge de pago. |
+| Aplicação / Função | Cor         | Código Hex | Uso                                                                             |
+| ------------------ | ----------- | ---------- | ------------------------------------------------------------------------------- |
+| Primária           | Roxo        | `#6C5CE7`  | Usado em botões, links e elementos de destaque.                                 |
+| Secundária         | Azul escuro | `#2D3436`  | Utilizado em títulos, cabeçalhos e alguns elementos da interface.               |
+| Fundo              | Cinza claro | `#F8F9FA`  | Cor utilizada no fundo principal das telas.                                     |
+| Cards e tabelas    | Branco      | `#FFFFFF`  | Usado como fundo dos cards, tabelas e janelas.                                  |
+| Texto              | Grafite     | `#1E293B`  | Utilizado nos textos, valores e informações principais.                         |
+| Alerta             | Laranja     | `#E17055`  | Indica assinaturas próximas do vencimento ou situações que precisam de atenção. |
+| Sucesso            | Verde       | `#00B894`  | Indica assinaturas ativas, pagamentos realizados e outras situações concluídas. |
 
 ## 3. Tipografia
 
@@ -31,15 +31,15 @@ Utilização do ecossistema gratuito Google Fonts, garantindo alta legibilidade 
 
 ## 4. Logotipo e Assinatura Visual
 
-- **Conceito da Marca:** um símbolo minimalista composto pela sobreposição de dois cartões/camadas estilizadas (representando a gestão de assinaturas recorrentes) formando a letra "S", acompanhado do logotipo em texto (`Poppins Bold`).
+- **Conceito da Marca:** um símbolo minimalista composto pela sobreposição de duas camadas estilizadas (representando a gestão de assinaturas recorrentes) formando a letra "S", acompanhado do logotipo em texto (`Poppins Bold`).
 - **Variantes de Aplicação:**
-  1. **Principal (Horizontal):** ícone em Roxo (`#6C5CE7`) + texto "Sub" em Grafite Escuro (`#1E293B`) e "Tracker" em Roxo (`#6C5CE7`). Utilizado na barra de navegação superior/lateral.
+  1. **Principal (Horizontal):** ícone em Roxo (`#6C5CE7`) + texto "Sub" em Grafite (`#1E293B`) e "Tracker" em Roxo (`#6C5CE7`). Utilizado na barra de navegação superior/lateral.
   2. **Monocromática:** versão em Branco Puro (`#FFFFFF`) para aplicação sobre fundos escuros ou cabeçalhos contrastantes.
   3. **Favicon / Ícone Simplificado:** apenas o símbolo estilizado em "S" para abas do navegador e ícones de atalho.
 
 ## 5. Mapeamento dos Protótipos de Telas Essenciais
 
-Para contemplar os fluxos centrais do sistema, definiu-se a prototipagem interativa no Figma das 5 telas centrais:
+Para observar os fluxos centrais do sistema, definiu-se a prototipagem interativa no Figma das 5 telas centrais:
 
 1. **Tela 1 — Autenticação (Login e Cadastro / UC01 e UC02):**
    Layout centralizado com formulário limpo, campos para e-mail/senha, validações visuais de erro e botão de ação primário em Roxo (`#6C5CE7`).
@@ -54,4 +54,4 @@ Para contemplar os fluxos centrais do sistema, definiu-se a prototipagem interat
    Modal ou tela dedicada com campos estruturados: Nome do serviço, Categoria (Select), Valor, Moeda (`BRL`, `USD`, `EUR`), Ciclo de Cobrança (Mensal/Anual) e Data de Vencimento.
 
 5. **Tela 5 — Divisão de Custos / Pessoas Vinculadas (UC09):**
-   Interface visual permitindo selecionar uma assinatura (ex: Netflix Family) e cadastrar/vincular pessoas, com a cota-parte calculada e exibida automaticamente para cada participante.
+   Interface visual permitindo selecionar uma assinatura (ex: Netflix Family) e cadastrar pessoas, com a parte calculada e exibida automaticamente para cada participante.
