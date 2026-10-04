@@ -39,7 +39,7 @@ O SubTracker é uma plataforma web criada para acabar com o descontrole e a bagu
 
 Para se destacar de aplicativos tradicionais do mercado (como Bobby ou Subscript), o SubTracker foca na solução de dois problemas muito comuns do dia a dia através de recursos práticos: a divisão proporcional de custos entre pessoas e a conversão automática de moedas em tempo real.
 
-A divisão de custos permite cadastrar e gerenciar o valor de serviços compartilhados com familiares, amigos ou colegas de trabalho — como planos familiares de streaming, licenças em equipe ou até contas da casa. O usuário consegue enxergar com clareza o valor total do serviço e a fatia exata que cabe a cada participante, o que evita desentendimentos e facilita na hora de cobrar a parte de cada um.
+A divisão de custos permite cadastrar e gerenciar o valor de serviços compartilhados com familiares, amigos ou colegas de trabalho, como planos familiares de streaming, licenças em equipe ou até contas da casa. O usuário consegue enxergar com clareza o valor total do serviço e a fatia exata que cabe a cada participante, o que evita desentendimentos e facilita na hora de cobrar a parte de cada um.
 
 Além disso, o sistema resolve a complicação das assinaturas internacionais com a conversão cambial dinâmica. Ao buscar cotações atualizadas em tempo real por meio de uma integração com a AwesomeAPI, o SubTracker converte automaticamente pagamentos em moedas estrangeiras (como dólar e euro) para a moeda principal do usuário (BRL). Com essa informação ajustada direto no Dashboard, o usuário se protege das oscilações do câmbio e consegue planejar com precisão o peso real dessas assinaturas no seu orçamento 
 
@@ -143,7 +143,7 @@ Documentação completa: [A documentação interativa com Swagger/ReDoc será di
 │   │   └── plano-integracao-externa.md
 │   ├── modelagem/
 │   │   ├── arquitetura/
-│   │   │   └── .gitkeep
+│   │   │   └── .arquitetura.md
 │   │   ├── banco-de-dados/
 │   │   │   ├── diagrama-er.pdf
 │   │   │   └── modelo-logico.pdf
@@ -152,11 +152,11 @@ Documentação completa: [A documentação interativa com Swagger/ReDoc será di
 │   │   └── classes/
 │   │       └── diagrama-de-classes.pdf
 │   ├── planejamento/
-│   │   └── .gitkeep
+│   │   └── planejamento.md
 │   ├── prototipos/
 │   │   └── prototipos-identidade-visual.md
 │   └── seguranca/
-│       └── .gitkeep
+│       └── ...
 ├── README.md
 
 ```
@@ -167,10 +167,10 @@ Documentação completa: [A documentação interativa com Swagger/ReDoc será di
 
 | Nome | Matrícula | Função no projeto |
 | --- | --- | --- |
-| Gustavo Barbosa | [matrícula] | Liderança & Backend |
-| Fred Gabriel | [matrícula] | Frontend & UI/UX |
-| Lucas de Jesus | [matrícula] | Banco de Dados & Modelagem |
-| Giovani Silva | [matrícula] | Testes & Documentação |
+| Gustavo Barbosa | 22506610 | Liderança & Backend |
+| Fred Gabriel | 22511576 | Frontend & UI/UX |
+| Lucas de Jesus | 22504385 | Banco de Dados & Modelagem |
+| Giovani Silva | 22503752 | Testes & Documentação |
 
 **Professor(a) responsável:** Felippe Pires Ferreira
 
@@ -252,15 +252,15 @@ Uso de mensagens curtas e no imperativo:
 ## 14. Limitações e próximos passos
 
 ### Limitações Atuais
-- **Fase Inicial de Planeamento:** A aplicação encontra-se na fase de especificação e modelação, sem código-fonte funcional implementado até ao momento[cite: 20].
+- **Fase Inicial de Planeamento:** A aplicação encontra-se na fase de especificação e modelação, sem código-fonte funcional implementado até ao momento.
 - **Conversão Simples de Moeda:** A conversão contempla apenas cotações diretas para Real (BRL), dependendo da disponibilidade da API externa (AwesomeAPI).
 
 ### Próximos Passos (Fase 2)
-- Implementar a estrutura base do projeto Django e configurar o banco de dados PostgreSQL[cite: 20].
+- Implementar a estrutura base do projeto Django e configurar o banco de dados PostgreSQL.
 - Desenvolver os modelos de dados (`User`, `Subscription`, `CostShare`) e as migrações iniciais.
 - Criar os endpoints da API RESTful com autenticação e validações de negócio.
 - Integrar a interface gráfica via Templates Django e Bootstrap para a gestão de assinaturas.
-- Configurar o pipeline de CI/CD via GitHub Actions e realizar o deploy em produção no Render[cite: 20].
+- Configurar o pipeline de CI/CD via GitHub Actions e realizar o deploy em produção no Render.
 
 ---
 
@@ -270,12 +270,11 @@ Uso de mensagens curtas e no imperativo:
 
 ### Documentação complementar
 
-- **Índice da pasta `docs/`:** [`docs/README.pdf`](docs/README.pdf)
+- **Índice da pasta `docs/`:** [`docs/README`](docs/README)
 - **Casos de uso (diagrama + especificações):** [`docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf`](docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf)
 - **Diagrama de classes:** [`docs/modelagem/classes/diagrama-de-classes.pdf`](docs/modelagem/classes/diagrama-de-classes.pdf)
 - **Modelo conceitual (ER):** [`docs/modelagem/banco-de-dados/diagrama-er.pdf`](docs/modelagem/banco-de-dados/diagrama-er.pdf)
 - **Modelo lógico:** [`docs/modelagem/banco-de-dados/modelo-logico.pdf`](docs/modelagem/banco-de-dados/modelo-logico.pdf)
-- **Apresentação:** [`docs/apresentacao.pdf`](docs/)
 
 ### Referências
 
