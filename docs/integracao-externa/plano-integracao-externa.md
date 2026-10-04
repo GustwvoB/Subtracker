@@ -1,4 +1,4 @@
-# Plano de Integração Externa — SubTracker
+# Plano de Integração Externa
 
 ## 1. API Escolhida e Finalidade
 
