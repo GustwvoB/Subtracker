@@ -1,4 +1,4 @@
-# Contrato Inicial da API — SubTracker
+# Contrato Inicial da API
 
 ## 1. Visão Geral e Diretrizes de Design
 
