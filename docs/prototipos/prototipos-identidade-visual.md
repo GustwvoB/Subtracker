@@ -59,4 +59,5 @@ Para observar os fluxos centrais do sistema, definiu-se a prototipagem interativ
 
    ## 6. Protótipo
 
-   **Link do Protótipo criado no figma:
+   **Link do Protótipo criado no figma:"**
+   **https://skip-sienna-80020486.figma.site/**
