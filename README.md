@@ -7,34 +7,58 @@
 **Instituição:** Centro Universitário de Brasília (UniCEUB)
 **Curso:** Análise e Desenvolvimento de Sistemas
 **Disciplina:** Desenvolvimento Web
-**Turma / Semestre:** [preencher]
+**Turma / Semestre:** A / 4º Semestre
 **Professor(a):** Felippe Pires Ferreira
 **Status do projeto:** Em desenvolvimento (Fase 1 — Documentação e arquitetura)
 
 ---
 
 ## Sumário
-(mantém igual ao template)
+
+- [1. Descrição do projeto](#1-descrição-do-projeto)
+- [2. Funcionalidades](#2-funcionalidades)
+- [3. Demonstração](#3-demonstração)
+- [4. Tecnologias utilizadas](#4-tecnologias-utilizadas)
+- [5. Arquitetura](#5-arquitetura)
+- [6. Organização dos diretórios](#6-organização-dos-diretórios)
+- [7. Participantes](#7-participantes)
+- [8. Como executar](#8-como-executar)
+- [9. Configuração](#9-configuração)
+- [10. Testes](#10-testes)
+- [11. Uso de inteligência artificial](#11-uso-de-inteligência-artificial)
+- [12. Contribuição e fluxo de trabalho](#12-contribuição-e-fluxo-de-trabalho)
+- [13. Histórico de versões](#13-histórico-de-versões)
+- [14. Limitações e próximos passos](#14-limitações-e-próximos-passos)
+- [15. Licença, referências e contato](#15-licença-referências-e-contato)
 
 ---
 
 ## 1. Descrição do projeto
 
-*Escreva aqui, com suas palavras, 2 a 4 parágrafos respondendo: qual problema de gestão de assinaturas/gastos recorrentes o SubTracker resolve? O que ele tem de diferente de apps como Bobby, Subscript etc.? (vocês já definiram dois diferenciais: divisão de custo entre pessoas + conversão de câmbio — explique o porquê de cada um valer a pena pro usuário.)*
+O **SubTracker** é uma solução web desenvolvida para resolver a falta de controlo centralizado e a fragmentação financeira no acompanhamento de assinaturas e despesas recorrentes. Atualmente, os utilizadores dependem do acompanhamento manual de extratos bancários ou da memória para monitorizar serviços como plataformas de streaming, ferramentas de produtividade, armazenamento em nuvem e licenças de software, o que resulta frequentemente em cobranças esquecidas, acumulação de serviços não utilizados e falta de previsibilidade do orçamento mensal.
+
+Diferenciando-se de aplicações tradicionais de mercado (como *Bobby* ou *Subscript*), o SubTracker foca-se na resolução de dois problemas reais e recorrentes através de funcionalidades chave inovadoras: a **divisão proporcional de custos entre pessoas** e a **conversão automática de câmbio em tempo real**.
+
+A **divisão de custos** permite registar e gerir o rateio de serviços partilhados (como planos familiares de streaming, licenças de software em equipa ou contas de habititação) com familiares, amigos ou colegas. O utilizador pode visualizar com clareza o valor total do serviço e a parcela exata sob a responsabilidade de cada participante, eliminando conflitos e facilitando a cobrança das partes devidas.
+
+Adicionalmente, o sistema aborda a complexidade das assinaturas internacionais com a **conversão dinâmica de câmbio**. Ao consumir cotações atualizadas em tempo real via API externa (AwesomeAPI), o SubTracker converte automaticamente pagamentos em moedas estrangeiras (como USD e EUR) para a moeda base do utilizador (BRL). Isto proporciona uma visão financeira precisa no *Dashboard*, protegendo o utilizador de variações cambiais e permitindo o planeamento exato do impacto real dessas assinaturas no seu orçamento diário.
 
 ### Objetivos
 
-- **Objetivo geral:** [defina em uma frase o que o sistema entrega]
+- **Objetivo geral:** Desenvolver uma plataforma web centralizada para o gerenciamento inteligente de assinaturas e despesas recorrentes, permitindo o controle financeiro, a divisão de custos entre pessoas e a conversão automática de moedas estrangeiras.
 - **Objetivos específicos:**
-  - [ex: permitir cadastro de assinaturas com valor, ciclo de cobrança e categoria]
-  - [ex: permitir dividir o custo de uma assinatura entre múltiplos usuários]
-  - [ex: converter automaticamente valores em moeda estrangeira via API de câmbio]
-  - [adicione os demais que o grupo definir]
+  - Permitir o cadastro, edição, consulta e cancelamento de assinaturas informando valor, ciclo de cobrança (mensal/anual), categoria e data de vencimento.
+  - Oferecer a funcionalidade de divisão proporcional do custo de assinaturas compartilhadas entre múltiplos participantes/pessoas vinculadas.
+  - Converter dinamicamente valores de assinaturas em moeda estrangeira (USD e EUR) para Reais (BRL) através da integração em tempo real com a AwesomeAPI.
+  - Apresentar um *Dashboard* financeiro consolidado com métricas de gastos totais, distribuição por categoria e alertas visuais de próximos vencimentos.
+  - Garantir a persistência e segurança dos dados dos usuários através de autenticação e controle de acesso individualizados.
 
 ### Público-alvo
 
-- [ex: estudantes que dividem assinaturas com colegas de república/família]
-- [outros perfis que o grupo identificar]
+- **Estudantes e Jovens Adultos:** Pessoas que dividem custos de assinaturas de streaming, música ou jogos com familiares, amigos ou colegas de república/apartamento.
+- **Consumidores de Serviços Internacionais:** Usuários que assinam ferramentas digitais, plataformas digitais ou serviços em moeda estrangeira (dólar/euro) e precisam prever o custo real em Reais no seu orçamento diário.
+- **Profissionais Autônomos e Freelancers:** Pessoas que gerenciam múltiplas assinaturas de softwares e ferramentas de produtividade para trabalho e precisam controlar seus gastos recorrentes.
+- **Organizadores de Finanças Pessoais:** Qualquer pessoa que busca centralizar e organizar suas despesas recorrentes mensais/anuais para evitar cobranças indesejadas e surpresas no orçamento.
 
 ---
 
@@ -42,24 +66,25 @@
 
 | Funcionalidade | Descrição | Status |
 | --- | --- | --- |
-| Cadastro de assinaturas | [CRUD completo: nome, valor, categoria, ciclo de cobrança] | Planejada |
-| Divisão de custos | [cadastro de participantes por assinatura + cálculo de quanto cada um deve] | Planejada |
-| Conversão de moeda | [consumo de API externa de câmbio para assinaturas em dólar/outras moedas] | Planejada |
-| Busca | [pesquisa por nome, categoria, status] | Planejada |
-| Relatórios | [gasto mensal/anual, por categoria, exportável] | Planejada |
-| API REST própria | [endpoints para terceiros consultarem dados de assinaturas] | Planejada |
+| Autenticação de Usuários | Cadastro, login, controle de sessão e gerenciamento de perfil individual. | Planejada |
+| Cadastro de Assinaturas | CRUD completo de assinaturas (nome, valor, moeda, categoria, ciclo de cobrança e data de vencimento). | Planejada |
+| Divisão de Custos | Vinculação de pessoas/participantes por assinatura e cálculo do rateio do valor para cada um. | Planejada |
+| Conversão de Moeda | Consumo de API externa de câmbio (AwesomeAPI) com *caching* em memória (`LocMemCache`) para conversão de moedas (USD/EUR para BRL). | Planejada |
+| Busca e Filtros | Pesquisa dinâmica e filtragem de assinaturas por nome, categoria e status (ativa/pausada). | Planejada |
+| Dashboard & Relatórios | Visão geral financeira com totalizadores mensais, gráficos de gastos por categoria e resumo exportável. | Planejada |
+| API REST própria | Endpoints documentados para autenticação, gerenciamento e consulta de assinaturas e rateios. | Planejada |
 
 ### Requisitos não funcionais
 
-- **Desempenho:** [defina um critério realista, ex: resposta da API em menos de X segundos]
-- **Segurança:** [ex: HTTPS em produção, segredos via variáveis de ambiente]
-- **Usabilidade:** [ex: interface responsiva]
-- **Disponibilidade:** [ex: aplicação publicada e acessível durante o período de avaliação]
+- **Desempenho:** O tempo de resposta das requisições da API REST não deve exceder 2 segundos em condições normais de uso, utilizando cache local de 1 hora para dados de câmbio externo.
+- **Segurança:** Comunicação via HTTPS em produção, senhas criptografadas no banco de dados (`PBKDF2/Django`) e armazenamento seguro de credenciais e chaves via variáveis de ambiente.
+- **Usabilidade:** Interface *web* responsiva, amigável e acessível, otimizada para navegação intuitiva em dispositivos móveis e *desktops*.
+- **Disponibilidade:** Aplicação publicada no Render e acessível publicamente com taxa de disponibilidade (uptime) superior a 99% durante o período de avaliação.
 
 ---
 
 ## 3. Demonstração
-*(preencher na Fase 2, com prints/GIF reais da aplicação)*
+> a preencher na Fase 2
 
 ---
 
@@ -67,41 +92,74 @@
 
 | Camada | Tecnologia | Versão |
 | --- | --- | --- |
-| Linguagem | Python | [definir] |
-| Backend | Django | [definir] |
-| API REST | Django REST Framework | [definir] |
-| Banco de dados | [PostgreSQL/SQLite — definir qual usarão em produção] | [definir] |
-| Frontend | [Templates Django / outro — definir] | — |
-| Testes | [pytest, etc. — definir] | — |
-| Infraestrutura | [Docker? GitHub Actions? — definir] | — |
+| Linguagem | Python | 3.11+ |
+| Backend | Django | 5.0+ |
+| API REST | Django REST Framework | 3.14+ |
+| Banco de dados | PostgreSQL (Produção) / SQLite (Desenvolvimento) | 16+ |
+| Frontend | Templates Django + HTML5, CSS3, JavaScript (Bootstrap 5) | - |
+| Testes | Pytest / Django Test Framework | 8.0+ |
+| Infraestrutura | Render (Hospedagem) + GitHub Actions (CI/CD) | - |
 
 ---
 
 ## 5. Arquitetura
 
-*Descreva aqui as camadas da aplicação e por que o grupo tomou essas decisões técnicas (isso precisa corresponder ao diagrama UML de componentes que vocês vão anexar em `docs/arquitetura/`).*
+*O SubTracker adota uma arquitetura monolítica organizada em camadas bem definidas, promovendo a separação de responsabilidades, facilidade de manutenção e alinhamento com os princípios REST.*
 
 ```text
-[Usuário] → [Interface / Frontend] → [API / Backend Django] → [Banco de dados]
+[Usuário] ──> [Frontend: Django Templates + JS] ──> [Backend: Django REST Framework] ──> [Banco de Dados: PostgreSQL]
+                                                                  │
+                                                                  ├──> [Cache: LocMemCache (Django)]
+                                                                  └──> [API Externa: AwesomeAPI (Moedas)]
 ```
 
 ### Endpoints principais (API própria)
-*Preencher conforme o contrato inicial da API definido em `docs/api/`.*
+*Descritas no contrato inicial da API definido em `docs/api/`.*
 
 | Método | Rota | Descrição |
 | --- | --- | --- |
-| `GET` | `/api/subscriptions/` | Listar assinaturas |
-| `POST` | `/api/subscriptions/` | Criar assinatura |
-| `GET` | `/api/subscriptions/{id}/` | Detalhar assinatura |
-| `PUT` | `/api/subscriptions/{id}/` | Atualizar assinatura |
+| `POST` | `/api/auth/register/` | Cadastro de novos usuários |
+| `POST` | `/api/auth/login/` | Autenticação e geração de sessão/token |
+| `GET` | `/api/subscriptions/` | Listar assinaturas do usuário autenticado (com busca e filtros) |
+| `POST` | `/api/subscriptions/` | Criar nova assinatura |
+| `GET` | `/api/subscriptions/{id}/` | Detalhar assinatura específica |
+| `PUT` | `/api/subscriptions/{id}/` | Atualizar dados de uma assinatura |
 | `DELETE` | `/api/subscriptions/{id}/` | Remover assinatura |
+| `POST` | `/api/subscriptions/{id}/shares/` | Vincular pessoa e definir rateio/divisão de custo |
+| `GET` | `/api/dashboard/summary/` | Retornar métricas financeiras consolidadas e cotações convertidas |
 
-Documentação completa: [link Swagger/Redoc — Fase 2]
+Documentação completa: [A documentação interativa com Swagger/ReDoc será disponibilizada na Fase 2 do projeto.]
 
 ---
 
 ## 6. Organização dos diretórios
-(adaptar a árvore do template conforme a estrutura real que vocês montarem — já criamos `docs/visao`, `docs/casos-de-uso`, `docs/arquitetura`, `docs/banco-de-dados`, `docs/api`, `docs/prototipos`, `docs/planejamento`, `docs/diagramas`, `docs/seguranca`)
+
+```text
+
+├── docs/
+│   ├── api/
+│   │   └── contrato-api.md
+│   ├── integracao-externa/
+│   │   └── plano-integracao-externa.md
+│   ├── modelagem/
+│   │   ├── arquitetura/
+│   │   │   └── .gitkeep
+│   │   ├── banco-de-dados/
+│   │   │   ├── diagrama-er.pdf
+│   │   │   └── modelo-logico.pdf
+│   │   ├── casos-de-uso/
+│   │   │   └── especificacoes-casos-de-uso.pdf
+│   │   └── classes/
+│   │       └── diagrama-de-classes.pdf
+│   ├── planejamento/
+│   │   └── .gitkeep
+│   ├── prototipos/
+│   │   └── prototipos-identidade-visual.md
+│   └── seguranca/
+│       └── .gitkeep
+├── README.md
+
+```
 
 ---
 
@@ -109,17 +167,17 @@ Documentação completa: [link Swagger/Redoc — Fase 2]
 
 | Nome | Matrícula | Função no projeto |
 | --- | --- | --- |
-| Gustavo [sobrenome] | [matrícula] | [ex: coordenação / backend] |
-| [colega 2] | [matrícula] | [função] |
-| [colega 3] | [matrícula] | [função] |
-| [colega 4] | [matrícula] | [função] |
+| Gustavo Barbosa | [matrícula] | Liderança & Backend |
+| Fred Gabriel | [matrícula] | Frontend & UI/UX |
+| Lucas de Jesus | [matrícula] | Banco de Dados & Modelagem |
+| Giovani Silva | [matrícula] | Testes & Documentação |
 
 **Professor(a) responsável:** Felippe Pires Ferreira
 
 ---
 
 ## 8. Como executar
-*(preencher conforme o setup real do projeto Django, quando o código existir — Fase 2)*
+> a preencher na Fase 2
 
 ---
 
@@ -127,16 +185,17 @@ Documentação completa: [link Swagger/Redoc — Fase 2]
 
 | Variável | Obrigatória | Descrição | Exemplo |
 | --- | --- | --- | --- |
-| `SECRET_KEY` | Sim | Chave secreta do Django | `[gerar localmente]` |
-| `DEBUG` | Sim | Modo debug (False em produção) | `False` |
-| `DATABASE_URL` | Sim | Conexão com o banco | `postgresql://user:senha@host:5432/db` |
-| `EXCHANGE_API_KEY` | Depende da API escolhida | Chave da API de câmbio | `[gerar localmente]` |
-| `ALLOWED_HOSTS` | Sim | Domínios permitidos em produção | `seudominio.com` |
+| `SECRET_KEY` | Sim | Chave secreta de segurança do Django | `django-insecure-1234567890abcdef` |
+| `DEBUG` | Sim | Modo de depuração (`True` em dev, `False` em produção) | `False` |
+| `DATABASE_URL` | Sim | String de conexão com o banco de dados PostgreSQL | `postgresql://user:senha@host:5432/subtracker_db` |
+| `ALLOWED_HOSTS` | Sim | Lista de domínios permitidos em produção | `subtracker.onrender.com,localhost,127.0.0.1` |
+| `USD_DEFAULT` | Não | Valor padrão de emergência para conversão de Dólar (BRL) | `5.50` |
+| `EUR_DEFAULT` | Não | Valor padrão de emergência para conversão de Euro (BRL) | `6.00` |
 
 ---
 
 ## 10. Testes
-*(preencher na Fase 2)*
+> a preencher na Fase 2
 
 ---
 
@@ -146,15 +205,39 @@ Documentação completa: [link Swagger/Redoc — Fase 2]
 
 ### Declaração de uso
 
-- **Houve uso de IA neste projeto?** [respondam honestamente — se usaram Claude/ChatGPT pra consultoria/dúvidas técnicas na Fase 1, mas não para gerar o conteúdo da especificação, digam isso explicitamente]
-- **Ferramentas utilizadas:** [ex: Claude — para dúvidas técnicas e organização, não para gerar requisitos/casos de uso]
-- **Finalidade:** [ex: esclarecimento de dúvidas sobre Django/Git, revisão de estrutura de documentos]
-- **O que NÃO foi delegado à IA:** definição do problema, objetivos, casos de uso, modelo de dados, arquitetura e demais decisões de projeto, que foram elaboradas pelo grupo
+- **Houve uso de IA neste projeto?** Sim, a inteligência artificial foi utilizada pontualmente como ferramenta de apoio e consultoria técnica durante o planejamento e estruturação da documentação.
+- **Ferramentas utilizadas:** Gemini e Claude.
+- **Finalidade:** Esclarecimento de dúvidas técnicas sobre a sintaxe do Django, auxílio na formatação de tabelas e listas em Markdown e apoio na organização visual do documento README.md.
+- **O que NÃO foi delegado à IA:** A concepção da ideia, a definição do problema, a regra de negócio do rateio de custos, o levantamento dos requisitos funcionais e não funcionais, a arquitetura do sistema e as decisões de modelagem de dados, todas elaboradas e validadas exclusivamente pelo grupo.
 
 ---
 
 ## 12. Contribuição e fluxo de trabalho
-(mantém igual ao template, ajustando nomes de branch se o grupo preferir)
+
+### Branches
+
+- `main` — versão estável para avaliação
+- `develop` — integração do grupo *(opcional)*
+- `feat/[nome]` — nova funcionalidade
+- `fix/[nome]` — correção de defeito
+- `docs/[nome]` — alterações só de documentação
+
+### Commits
+
+Uso de mensagens curtas e no imperativo:
+
+- `feat: adiciona cadastro de reservas`
+- `fix: corrige validação de data`
+- `docs: atualiza instruções de execução`
+
+### Passos sugeridos
+
+1. Criar uma branch a partir de `main`.
+2. Implementar e testar localmente.
+3. Abrir um *pull request* / *merge request* para revisão do grupo.
+4. Só então integrar à branch principal.
+
+**Issues e quadro de tarefas:** [link do GitHub Projects]
 
 ---
 
@@ -162,15 +245,47 @@ Documentação completa: [link Swagger/Redoc — Fase 2]
 
 | Versão | Data | Descrição |
 | --- | --- | --- |
-| `0.0.1` | [data] | Estrutura inicial do repositório |
+| `0.1.0` | 03/10/2026 | Documentação inicial e especificação do projeto (Fase 1) |
 
 ---
 
 ## 14. Limitações e próximos passos
-*(preencher conforme o grupo for avançando)*
+
+### Limitações Atuais
+- **Fase Inicial de Planeamento:** A aplicação encontra-se na fase de especificação e modelação, sem código-fonte funcional implementado até ao momento[cite: 20].
+- **Conversão Simples de Moeda:** A conversão contempla apenas cotações diretas para Real (BRL), dependendo da disponibilidade da API externa (AwesomeAPI).
+
+### Próximos Passos (Fase 2)
+- Implementar a estrutura base do projeto Django e configurar o banco de dados PostgreSQL[cite: 20].
+- Desenvolver os modelos de dados (`User`, `Subscription`, `CostShare`) e as migrações iniciais.
+- Criar os endpoints da API RESTful com autenticação e validações de negócio.
+- Integrar a interface gráfica via Templates Django e Bootstrap para a gestão de assinaturas.
+- Configurar o pipeline de CI/CD via GitHub Actions e realizar o deploy em produção no Render[cite: 20].
 
 ---
 
 ## 15. Licença, referências e contato
 
 **Licença:** Uso exclusivamente acadêmico
+
+### Documentação complementar
+
+- **Índice da pasta `docs/`:** [`docs/README.pdf`](docs/README.pdf)
+- **Casos de uso (diagrama + especificações):** [`docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf`](docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf)
+- **Diagrama de classes:** [`docs/modelagem/classes/diagrama-de-classes.pdf`](docs/modelagem/classes/diagrama-de-classes.pdf)
+- **Modelo conceitual (ER):** [`docs/modelagem/banco-de-dados/diagrama-er.pdf`](docs/modelagem/banco-de-dados/diagrama-er.pdf)
+- **Modelo lógico:** [`docs/modelagem/banco-de-dados/modelo-logico.pdf`](docs/modelagem/banco-de-dados/modelo-logico.pdf)
+- **Apresentação:** [`docs/apresentacao.pdf`](docs/)
+
+### Referências
+
+- **Django Software Foundation.** *Django documentation (v5.0).* Disponível em: <https://docs.djangoproject.com/>.
+- **Django REST Framework.** *Django REST Framework documentation.* Disponível em: <https://www.django-rest-framework.org/>.
+- **AwesomeAPI.** *API de Cotações de Moedas.* Disponível em: <https://docs.awesomeapi.com.br/api-de-moedas>.
+- **Bootstrap.** *Bootstrap v5.3 Documentation.* Disponível em: <https://getbootstrap.com/docs/5.3/>.
+
+### Contato
+
+Dúvidas sobre o projeto: Abra uma *issue* no repositório GitHub do projeto.
+
+**Agradecimentos:** Ao corpo docente, aos monitores da disciplina e ao UniCEUB pelo suporte acadêmico e fornecimento dos materiais de estudo.
