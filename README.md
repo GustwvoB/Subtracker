@@ -35,7 +35,7 @@
 
 ## 1. Descrição do projeto
 
-O **SubTracker** é uma solução web desenvolvida para resolver a falta de controlo centralizado e a fragmentação financeira no acompanhamento de assinaturas e despesas recorrentes. Atualmente, os utilizadores dependem do acompanhamento manual de extratos bancários ou da memória para monitorizar serviços como plataformas de streaming, ferramentas de produtividade, armazenamento em nuvem e licenças de software, o que resulta frequentemente em cobranças esquecidas, acumulação de serviços não utilizados e falta de previsibilidade do orçamento mensal.
+O **SubTracker** é uma solução web desenvolvida para resolver a falta de controle centralizado e a fragmentação financeira no acompanhamento de assinaturas e despesas recorrentes. Atualmente, os utilizadores dependem do acompanhamento manual de extratos bancários ou da memória para monitorizar serviços como plataformas de streaming, ferramentas de produtividade, armazenamento em nuvem e licenças de software, o que resulta frequentemente em cobranças esquecidas, acumulação de serviços não utilizados e falta de previsibilidade do orçamento mensal.
 
 Diferenciando-se de aplicações tradicionais de mercado (como *Bobby* ou *Subscript*), o SubTracker foca-se na resolução de dois problemas reais e recorrentes através de funcionalidades chave inovadoras: a **divisão proporcional de custos entre pessoas** e a **conversão automática de câmbio em tempo real**.
 
