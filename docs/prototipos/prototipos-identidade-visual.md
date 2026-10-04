@@ -55,3 +55,8 @@ Para observar os fluxos centrais do sistema, definiu-se a prototipagem interativ
 
 5. **Tela 5 — Divisão de Custos / Pessoas Vinculadas (UC09):**
    Interface visual permitindo selecionar uma assinatura (ex: Netflix Family) e cadastrar pessoas, com a parte calculada e exibida automaticamente para cada participante.
+
+
+   ## 6. Protótipo
+
+   **Link do Protótipo criado no figma:
