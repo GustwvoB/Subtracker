@@ -42,7 +42,6 @@
 ## 4. Estratégia de Execução e Comunicação
 
 - **Metodologia:** Kanban adaptado através do GitHub Projects, com colunas `Backlog`, `In Progress`, `Review/PR` e `Done`.
-- **Ciclos de Trabalho:** sprints quinzenais com reuniões de alinhamento (check-ins) todas as terças-feiras.
 - **Controlo de Código (Git):** padrão GitFlow simples com branch `main` protegida, desenvolvimento em branches por funcionalidade (`feat/...`) e necessidade de pelo menos 1 aprovação via Pull Request.
 
 ## 5. Matriz de Gestão de Riscos
