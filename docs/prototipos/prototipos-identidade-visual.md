@@ -1,4 +1,4 @@
-# Protótipos e Identidade Visual — SubTracker
+# Protótipos e Identidade Visual
 
 ## 1. Nome do Projeto e Proposta Visual
 
