@@ -6,10 +6,10 @@
 - **Formato de Dados:** JSON (`application/json`)
 - **Mecanismo de Autenticação:** `TokenAuthentication` do Django REST Framework via Header HTTP `Authorization: Token <token_key>`.
 - **Padrão de Serialização de Relacionamentos (DRF):**
-  - **Leitura (`GET`):** relacionamentos (ex: `categoria`) são expandidos como objetos aninhados para facilitar o consumo pelo cliente frontend sem necessidade de requisições adicionais.
+  - **Leitura (`GET`):** relacionamentos (ex: `categoria`) são expandidos como objetos estruturados para facilitar o consumo pelo cliente frontend sem necessidade de requisições adicionais. troque a palavra aninhados
   - **Escrita (`POST`/`PUT`):** os relacionamentos aceitam apenas o ID da chave primária (ex: `id_categoria: 1`).
 - **Cálculo de Cota-Parte:** o campo `percentual_cota` da divisão de custos é calculado automaticamente pelo backend (100 ÷ número de pessoas vinculadas à assinatura, incluindo o próprio usuário dono), sendo recalculado a cada inclusão ou remoção de participante. Não é um campo aceito em requisições de escrita.
-- **Tratamento de Segurança:** tentativas de acesso a recursos de outros utilizadores retornam código `404 Not Found` em vez de `403 Forbidden`, para evitar enumeração de dados.
+- **Tratamento de Segurança:** tentativas de acesso a recursos de outros utilizadores retornam código `404 Not Found` em vez de `403 Forbidden`, para evitar confusão de dados.
 - **Padrão de Respostas de Erro:**
   ```json
   { "detail": "Mensagem explicativa do erro ou campos inválidos." }
@@ -130,7 +130,7 @@
 
 - **Endpoint:** `POST /api/v1/assinaturas/{id}/divisoes/`
 - **Autenticação:** Requer Token.
-- **Observação:** o campo `percentual_cota` não é enviado pelo cliente — o backend calcula automaticamente a cota-parte igualitária entre todos os participantes vinculados à assinatura.
+- **Observação:** o campo `percentual_cota` não é enviado pelo cliente — o backend calcula automaticamente a parte igual entre todos os participantes vinculados à assinatura.
 
 **Requisição**
 ```json
