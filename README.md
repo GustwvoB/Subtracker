@@ -237,7 +237,7 @@ Uso de mensagens curtas e no imperativo:
 3. Abrir um *pull request* / *merge request* para revisão do grupo.
 4. Só então integrar à branch principal.
 
-**Issues e quadro de tarefas:** [link do GitHub Projects]
+**Issues e quadro de tarefas:** ...
 
 ---
 
@@ -285,6 +285,6 @@ Uso de mensagens curtas e no imperativo:
 
 ### Contato
 
-Dúvidas sobre o projeto: Abra uma *issue* no repositório GitHub do projeto.
+Dúvidas sobre o projeto, envie um e-mail: gustavobs071@sempreceub.com
 
 **Agradecimentos:** Ao corpo docente, aos monitores da disciplina e ao UniCEUB pelo suporte acadêmico e fornecimento dos materiais de estudo.
