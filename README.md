@@ -4,12 +4,12 @@
 [![Versão](https://img.shields.io/badge/versão-0.1.0-blue)]()
 [![Licença](https://img.shields.io/badge/licença-acadêmica-lightgrey)]()
 
-**Instituição:** Centro Universitário de Brasília (UniCEUB)
-**Curso:** Análise e Desenvolvimento de Sistemas
-**Disciplina:** Desenvolvimento Web
-**Turma / Semestre:** A / 4º Semestre
-**Professor(a):** Felippe Pires Ferreira
-**Status do projeto:** Em desenvolvimento (Fase 1 — Documentação e arquitetura)
+**Instituição:** Centro Universitário de Brasília (UniCEUB)<br>
+**Curso:** Análise e Desenvolvimento de Sistemas<br>
+**Disciplina:** Desenvolvimento Web<br>
+**Turma / Semestre:** 4º Semestre, turma A<br>
+**Professor(a):** Felippe Pires Ferreira<br>
+**Status do projeto:** Em desenvolvimento (Fase 1 – Documentação e arquitetura)
 
 ---
 
