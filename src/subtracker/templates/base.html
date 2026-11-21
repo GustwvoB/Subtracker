@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}SubTracker{% endblock %}</title>
+
+    <!-- Bootstrap CSS via CDN (igual ao exemplo da aula) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fontes da identidade visual: Poppins (títulos) e Inter (texto) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS do projeto: carregado DEPOIS do Bootstrap para poder sobrescrever -->
+    <link href="{% static 'css/subtracker.css' %}" rel="stylesheet">
+
+    <!-- Ícone da aba do navegador -->
+    <link rel="icon" href="{% static 'images/logo.svg' %}" type="image/svg+xml">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Barra de navegação (navbar do Bootstrap) -->
+    <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'dashboard' %}">
+                <img src="{% static 'images/logo.svg' %}" alt="Logo do SubTracker" width="36" height="36">
+                <span><span class="marca-sub">Sub</span><span class="marca-tracker">Tracker</span></span>
+            </a>
+
+            {% if request.user.is_authenticated %}
+            <!-- Botão "hambúrguer" que aparece só em telas pequenas -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                {% include 'menu.html' %}
+                <span class="navbar-text me-3">
+                    Olá, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}
+                </span>
+                <a class="btn btn-outline-secondary btn-sm" href="{% url 'logout' %}">Sair</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Mensagens de sucesso/erro (success, error...) -->
+    {% include 'messages.html' %}
+
+    <!-- Conteúdo de cada página entra aqui -->
+    <main class="container flex-grow-1 py-4">
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer class="text-center py-3 text-muted small border-top bg-white">
+        &copy; 2026 SubTracker &mdash; Projeto acadêmico de Desenvolvimento Web (UniCEUB)
+    </footer>
+
+    <!-- Bootstrap JS (necessário para o menu hambúrguer e o fechar dos alertas) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

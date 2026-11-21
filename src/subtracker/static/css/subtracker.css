@@ -1,0 +1,64 @@
+/* ============================================================
+   Identidade visual do SubTracker
+   Paleta e fontes definidas no documento de Protótipos/Identidade
+   ============================================================ */
+
+/* Variáveis CSS (:root) - mudar a cor aqui muda o site inteiro */
+:root {
+    --cor-primaria: #6C5CE7;          /* Roxo SaaS: botões, links, foco */
+    --cor-primaria-escura: #5A4BD1;   /* versão mais escura para :hover */
+    --cor-secundaria: #2D3436;        /* Azul marinho: títulos */
+    --cor-fundo: #F8F9FA;             /* fundo geral */
+    --cor-texto: #1E293B;             /* texto principal */
+    --cor-alerta: #E17055;            /* vencimento próximo */
+    --cor-sucesso: #00B894;           /* status ativo */
+}
+
+body {
+    font-family: 'Inter', sans-serif;        /* corpo do texto */
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+/* Títulos e nome da marca usam Poppins */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--cor-secundaria);
+}
+
+a { color: var(--cor-primaria); }
+a:hover { color: var(--cor-primaria-escura); }
+
+/* O Bootstrap pinta os botões usando variáveis --bs-btn-*.
+   Aqui só trocamos os valores pelas cores da nossa marca. */
+.btn-primary {
+    --bs-btn-bg: var(--cor-primaria);
+    --bs-btn-border-color: var(--cor-primaria);
+    --bs-btn-hover-bg: var(--cor-primaria-escura);
+    --bs-btn-hover-border-color: var(--cor-primaria-escura);
+    --bs-btn-active-bg: var(--cor-primaria-escura);
+    --bs-btn-active-border-color: var(--cor-primaria-escura);
+    --bs-btn-disabled-bg: var(--cor-primaria);
+    --bs-btn-disabled-border-color: var(--cor-primaria);
+    --bs-btn-focus-shadow-rgb: 108, 92, 231;
+}
+
+/* Cartões com cantos arredondados e sombra suave (proposta "Clean & Tech SaaS") */
+.card {
+    border: 0;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(45, 52, 54, 0.08);
+}
+
+.navbar { box-shadow: 0 1px 4px rgba(45, 52, 54, 0.08); }
+
+/* Campo em foco com a cor da marca */
+.form-control:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.2);
+}
+
+/* Logotipo em texto: "Sub" grafite + "Tracker" roxo */
+.marca-sub { color: var(--cor-texto); }
+.marca-tracker { color: var(--cor-primaria); }

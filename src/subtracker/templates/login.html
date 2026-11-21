@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Entrar - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+        <div class="card p-4">
+            <h2 class="h4 text-center mb-4">Entrar</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="{{ email }}" required autocomplete="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                           required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+
+            <p class="text-center mt-3 mb-0">
+                Ainda não tem conta? <a href="{% url 'register' %}">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

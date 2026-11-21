@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Criar conta - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+        <div class="card p-4">
+            <h2 class="h4 text-center mb-4">Criar conta</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome"
+                           value="{{ nome }}" maxlength="150" required autocomplete="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="{{ email }}" maxlength="150" required autocomplete="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                           minlength="8" required autocomplete="new-password">
+                    <div class="form-text">Mínimo de 8 caracteres.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">Confirme a senha</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                           minlength="8" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+            </form>
+
+            <p class="text-center mt-3 mb-0">
+                Já tem conta? <a href="{% url 'login' %}">Entrar</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
