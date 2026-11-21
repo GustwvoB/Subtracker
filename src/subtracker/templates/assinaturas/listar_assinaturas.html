@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Assinaturas - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Minhas assinaturas</h1>
+    <a href="{% url 'cadastrar_assinatura' %}" class="btn btn-primary">+ Nova assinatura</a>
+</div>
+
+<!-- Busca e filtros: formulário GET, os valores vão para a URL (?busca=...&categoria=...) -->
+<form method="get" class="row g-2 mb-4">
+    <div class="col-12 col-md-4">
+        <input type="text" name="busca" class="form-control" placeholder="Buscar por nome..." value="{{ busca }}">
+    </div>
+    <div class="col-6 col-md-3">
+        <select name="categoria" class="form-select">
+            <option value="">Todas as categorias</option>
+            {% for c in categorias %}
+            <option value="{{ c.pk }}" {% if categoria_id == c.pk %}selected{% endif %}>{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-3">
+        <select name="status" class="form-select">
+            <option value="">Todos os vencimentos</option>
+            <option value="vencendo" {% if status == 'vencendo' %}selected{% endif %}>Vencem em 7 dias</option>
+            <option value="vencidas" {% if status == 'vencidas' %}selected{% endif %}>Vencidas</option>
+            <option value="trial" {% if status == 'trial' %}selected{% endif %}>Em free trial</option>
+        </select>
+    </div>
+    <div class="col-12 col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-fill">Filtrar</button>
+        <a href="{% url 'listar_assinaturas' %}" class="btn btn-outline-secondary">Limpar</a>
+    </div>
+</form>
+
+{% if assinaturas %}
+<div class="card">
+    <!-- table-responsive: em telas pequenas a tabela ganha rolagem lateral -->
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Serviço</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Ciclo</th>
+                    <th>Vencimento</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in assinaturas %}
+                <tr>
+                    <td>
+                        <a href="{% url 'detalhar_assinatura' a.pk %}">{{ a.nome_servico }}</a>
+                        {% if a.eh_free_trial %}<span class="badge text-bg-info ms-1">Free trial</span>{% endif %}
+                    </td>
+                    <td>
+                        <span class="cor-categoria" style="--cor: {{ a.categoria.cor_identificacao|default:'#636E72' }}">&#x25CF;</span>
+                        {{ a.categoria.nome }}
+                    </td>
+                    <td>{{ a.moeda }} {{ a.valor }}</td>
+                    <td>{{ a.get_ciclo_cobranca_display }}</td>
+                    <td>
+                        {{ a.data_vencimento|date:"d/m/Y" }}
+                        {% if a.esta_vencida %}
+                            <span class="badge text-bg-danger ms-1">Vencida</span>
+                        {% elif a.esta_proxima_do_vencimento %}
+                            <span class="badge ms-1" style="background-color: var(--cor-alerta)">
+                                {% if a.dias_para_vencer == 0 %}Vence hoje{% else %}Em {{ a.dias_para_vencer }} dia(s){% endif %}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end text-nowrap">
+                        <a href="{% url 'detalhar_assinatura' a.pk %}" class="btn btn-sm btn-outline-secondary">Ver</a>
+                        <a href="{% url 'alterar_assinatura' a.pk %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <a href="{% url 'excluir_assinatura' a.pk %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<p class="text-muted small mt-2">{{ assinaturas|length }} assinatura(s) encontrada(s).</p>
+
+{% else %}
+<div class="card p-4 text-center">
+    {% if filtrando %}
+        <p class="mb-0">Nenhuma assinatura encontrada para os filtros informados.</p>
+    {% else %}
+        <p class="mb-2">Você ainda não cadastrou nenhuma assinatura.</p>
+        <div><a href="{% url 'cadastrar_assinatura' %}" class="btn btn-primary">Cadastrar a primeira</a></div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

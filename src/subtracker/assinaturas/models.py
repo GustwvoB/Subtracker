@@ -74,13 +74,19 @@ class Assinatura(models.Model):
     def __str__(self):
         return f"{self.nome_servico} - {self.valor} {self.moeda}"
 
+        # Quantos dias faltam para o vencimento (negativo = já venceu)
+    def dias_para_vencer(self):
+        # subtrair duas datas devolve um timedelta; .days é a diferença em dias
+        return (self.data_vencimento - date.today()).days
+
     # Método do nosso diagrama de classes: estaProximaDoVencimento(dias)
     def esta_proxima_do_vencimento(self, dias=7):
-        hoje = date.today()
-        # subtrair duas datas devolve um timedelta; .days é a diferença em dias
-        diferenca = (self.data_vencimento - hoje).days
         # True se vence hoje ou nos próximos 'dias' (nunca se já venceu)
-        return 0 <= diferenca <= dias
+        return 0 <= self.dias_para_vencer() <= dias
+
+    # True se a data de vencimento já passou
+    def esta_vencida(self):
+        return self.dias_para_vencer() < 0
 
     # Método do nosso diagrama de classes: calcularValorEmBRL(cotacao)
     def calcular_valor_em_brl(self, cotacao):

@@ -62,3 +62,17 @@ a:hover { color: var(--cor-primaria-escura); }
 /* Logotipo em texto: "Sub" grafite + "Tracker" roxo */
 .marca-sub { color: var(--cor-texto); }
 .marca-tracker { color: var(--cor-primaria); }
+
+/* Erros de validação dos formulários do Django (lista <ul class="errorlist">) */
+.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0 0;
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+/* Bolinha colorida da categoria: a cor chega pela variável --cor (definida no HTML) */
+.cor-categoria {
+    color: var(--cor);
+}

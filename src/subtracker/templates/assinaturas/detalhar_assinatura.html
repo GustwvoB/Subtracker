@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ assinatura.nome_servico }} - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">{{ assinatura.nome_servico }}</h1>
+    <a href="{% url 'listar_assinaturas' %}" class="btn btn-outline-secondary">&larr; Voltar</a>
+</div>
+
+<div class="card p-4">
+    <dl class="row mb-0">
+        <dt class="col-sm-4">Categoria</dt>
+        <dd class="col-sm-8">
+            <span class="cor-categoria" style="--cor: {{ assinatura.categoria.cor_identificacao|default:'#636E72' }}">&#x25CF;</span>
+            {{ assinatura.categoria.nome }}
+        </dd>
+
+        <dt class="col-sm-4">Valor</dt>
+        <dd class="col-sm-8">{{ assinatura.moeda }} {{ assinatura.valor }}</dd>
+
+        <dt class="col-sm-4">Ciclo de cobrança</dt>
+        <dd class="col-sm-8">{{ assinatura.get_ciclo_cobranca_display }}</dd>
+
+        <dt class="col-sm-4">Próximo vencimento</dt>
+        <dd class="col-sm-8">
+            {{ assinatura.data_vencimento|date:"d/m/Y" }}
+            {% if assinatura.esta_vencida %}
+                <span class="badge text-bg-danger ms-1">Vencida</span>
+            {% elif assinatura.esta_proxima_do_vencimento %}
+                <span class="badge ms-1" style="background-color: var(--cor-alerta)">
+                    {% if assinatura.dias_para_vencer == 0 %}Vence hoje{% else %}Em {{ assinatura.dias_para_vencer }} dia(s){% endif %}
+                </span>
+            {% endif %}
+        </dd>
+
+        <dt class="col-sm-4">Período de teste</dt>
+        <dd class="col-sm-8">
+            {% if assinatura.eh_free_trial %}
+                Sim, até {{ assinatura.data_limite_trial|date:"d/m/Y" }}
+            {% else %}
+                Não
+            {% endif %}
+        </dd>
+    </dl>
+</div>
+
+<div class="d-flex gap-2 mt-3">
+    <a href="{% url 'alterar_assinatura' assinatura.pk %}" class="btn btn-primary">Editar</a>
+    <a href="{% url 'excluir_assinatura' assinatura.pk %}" class="btn btn-outline-danger">Excluir</a>
+</div>
+{% endblock %}

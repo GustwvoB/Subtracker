@@ -1,10 +1,16 @@
-from django.shortcuts import render, redirect
+from datetime import date, timedelta
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+
+from .models import Assinatura, Categoria
+from .forms import AssinaturaForm
 
 
 # ------------------------------------------------------------------
@@ -96,3 +102,119 @@ def logout_view(request):
 @login_required(login_url='login')  # sem login, manda para a tela de login
 def dashboard(request):
     return render(request, 'assinaturas/dashboard.html', {})
+
+
+# Função auxiliar usada pelas views que recebem o número (id) de uma assinatura na URL.
+# Devolve a assinatura SE ela existir e for do usuário logado; senão, erro 404.
+def buscar_assinatura_do_usuario(request, id):
+    # Um número gigante na URL estouraria o banco de dados (erro 500).
+    # 2147483647 é o maior número inteiro aceito pelo banco: acima disso, "não existe".
+    if id > 2147483647:
+        raise Http404
+    return get_object_or_404(Assinatura, pk=id, usuario=request.user)
+
+
+# ------------------------------------------------------------------
+# UC07 - Consultar/Buscar Assinaturas
+# ------------------------------------------------------------------
+@login_required(login_url='login')
+def listar_assinaturas(request):
+    # SEMPRE filtramos pelo usuário logado: ninguém vê assinatura de outra pessoa
+    assinaturas = Assinatura.objects.filter(usuario=request.user)
+
+    # Parâmetros da busca vêm pela URL (GET): ?busca=net&categoria=1&status=vencendo
+    busca = request.GET.get('busca', '').strip()
+    categoria_id = request.GET.get('categoria', '')
+    status = request.GET.get('status', '')
+
+    # 1) Busca por nome (icontains = "contém", sem diferenciar maiúsculas/minúsculas)
+    if busca:
+        assinaturas = assinaturas.filter(nome_servico__icontains=busca)
+
+    # 2) Filtro por categoria (isdigit evita erro se alguém digitar texto na URL;
+    #    limitar a 9 dígitos evita um número gigante que estouraria o banco)
+    if categoria_id.isdigit() and len(categoria_id) <= 9:
+        categoria_id = int(categoria_id)
+        assinaturas = assinaturas.filter(categoria=categoria_id)
+    else:
+        categoria_id = None
+
+    # 3) Filtro por status de vencimento (gte = maior ou igual, lte = menor ou igual, lt = menor)
+    hoje = date.today()
+    if status == 'vencendo':
+        assinaturas = assinaturas.filter(data_vencimento__gte=hoje,
+                                         data_vencimento__lte=hoje + timedelta(days=7))
+    elif status == 'vencidas':
+        assinaturas = assinaturas.filter(data_vencimento__lt=hoje)
+    elif status == 'trial':
+        assinaturas = assinaturas.filter(eh_free_trial=True)
+    else:
+        status = ''
+
+    contexto = {
+        'assinaturas': assinaturas,
+        'categorias': Categoria.objects.all(),   # para montar o <select> de categorias
+        'busca': busca,
+        'categoria_id': categoria_id,
+        'status': status,
+        'filtrando': bool(busca or categoria_id or status),
+    }
+    return render(request, 'assinaturas/listar_assinaturas.html', contexto)
+
+
+# Detalhes de uma assinatura
+@login_required(login_url='login')
+def detalhar_assinatura(request, id):
+    # se não existir OU for de outro usuário, devolve página 404
+    assinatura = buscar_assinatura_do_usuario(request, id)
+    return render(request, 'assinaturas/detalhar_assinatura.html', {'assinatura': assinatura})
+
+
+# ------------------------------------------------------------------
+# UC04 - Cadastrar Assinatura
+# ------------------------------------------------------------------
+@login_required(login_url='login')
+def cadastrar_assinatura(request):
+    if request.method == 'POST':
+        # A assinatura já nasce com o dono (usuário logado) via instance=
+        form = AssinaturaForm(request.POST, instance=Assinatura(usuario=request.user))
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Assinatura cadastrada com sucesso.')
+            return redirect('listar_assinaturas')
+        messages.error(request, 'Erro no preenchimento do formulário. Verifique os dados informados.')
+    else:
+        form = AssinaturaForm()
+    return render(request, 'assinaturas/form_assinatura.html', {'form': form})
+
+
+# ------------------------------------------------------------------
+# UC05 - Editar Assinatura
+# ------------------------------------------------------------------
+@login_required(login_url='login')
+def alterar_assinatura(request, id):
+    assinatura = buscar_assinatura_do_usuario(request, id)
+    if request.method == 'POST':
+        form = AssinaturaForm(request.POST, instance=assinatura)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Assinatura alterada com sucesso.')
+            return redirect('listar_assinaturas')
+        messages.error(request, 'Erro ao alterar a assinatura. Verifique os dados informados.')
+    else:
+        form = AssinaturaForm(instance=assinatura)   # formulário já preenchido
+    return render(request, 'assinaturas/form_assinatura.html',
+                  {'form': form, 'editar': True, 'assinatura': assinatura})
+
+
+# ------------------------------------------------------------------
+# UC06 - Excluir Assinatura (com tela de confirmação)
+# ------------------------------------------------------------------
+@login_required(login_url='login')
+def excluir_assinatura(request, id):
+    assinatura = buscar_assinatura_do_usuario(request, id)
+    if request.method == 'POST':
+        assinatura.delete()
+        messages.success(request, 'Assinatura excluída com sucesso.')
+        return redirect('listar_assinaturas')
+    return render(request, 'assinaturas/excluir_assinatura.html', {'assinatura': assinatura})

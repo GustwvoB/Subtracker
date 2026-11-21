@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{% if editar %}Alterar{% else %}Nova{% endif %} assinatura - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <div class="card p-4">
+            <h1 class="h4 mb-4">{% if editar %}Alterar{% else %}Nova{% endif %} assinatura</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Erros que envolvem mais de um campo (ex.: free trial sem data) -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-12 col-md-8 mb-3">
+                        {{ form.nome_servico.label_tag }}
+                        {{ form.nome_servico }}
+                        {{ form.nome_servico.errors }}
+                    </div>
+                    <div class="col-12 col-md-4 mb-3">
+                        {{ form.categoria.label_tag }}
+                        {{ form.categoria }}
+                        {{ form.categoria.errors }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-4 mb-3">
+                        {{ form.valor.label_tag }}
+                        {{ form.valor }}
+                        {{ form.valor.errors }}
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        {{ form.moeda.label_tag }}
+                        {{ form.moeda }}
+                        {{ form.moeda.errors }}
+                    </div>
+                    <div class="col-6 col-md-4 mb-3">
+                        {{ form.ciclo_cobranca.label_tag }}
+                        {{ form.ciclo_cobranca }}
+                        {{ form.ciclo_cobranca.errors }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    {{ form.data_vencimento.label_tag }}
+                    {{ form.data_vencimento }}
+                    {{ form.data_vencimento.errors }}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form.eh_free_trial }}
+                    {{ form.eh_free_trial.label_tag }}
+                    {{ form.eh_free_trial.errors }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form.data_limite_trial.label_tag }}
+                    {{ form.data_limite_trial }}
+                    <div class="form-text">Preencha somente se estiver em período de teste.</div>
+                    {{ form.data_limite_trial.errors }}
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="{% url 'listar_assinaturas' %}" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
