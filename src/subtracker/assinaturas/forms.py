@@ -58,3 +58,23 @@ class AssinaturaForm(forms.ModelForm):
             dados['data_limite_trial'] = None   # sem teste, não guarda data limite
 
         return dados
+
+# Formulário simples (forms.Form, sem model) para vincular uma pessoa a uma assinatura
+class VinculoForm(forms.Form):
+    nome = forms.CharField(
+        max_length=100,
+        label='Nome',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Lucas Silva'}),
+    )
+    email = forms.EmailField(
+        max_length=150,
+        required=False,   # o e-mail é opcional
+        label='E-mail (opcional)',
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'lucas@email.com'}),
+    )
+
+    def clean_nome(self):
+        nome = self.cleaned_data['nome'].strip()
+        if len(nome) < 2:
+            raise forms.ValidationError('O nome deve ter pelo menos 2 caracteres.')
+        return nome

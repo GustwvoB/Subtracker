@@ -14,4 +14,8 @@ urlpatterns = [
     path('assinaturas/<int:id>/', views.detalhar_assinatura, name='detalhar_assinatura'),
     path('assinaturas/<int:id>/editar/', views.alterar_assinatura, name='alterar_assinatura'),
     path('assinaturas/<int:id>/excluir/', views.excluir_assinatura, name='excluir_assinatura'),
+
+    # Divisão de custos
+    path('assinaturas/<int:id>/divisao/', views.dividir_assinatura, name='dividir_assinatura'),
+    path('assinaturas/<int:id>/divisao/<int:id_divisao>/remover/', views.remover_vinculo, name='remover_vinculo'),
 ]

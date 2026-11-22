@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Divisão de custos - SubTracker{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1">Divisão de custos</h1>
+        <p class="text-muted mb-0">
+            {{ assinatura.nome_servico }} &mdash; {{ assinatura.moeda }} {{ assinatura.valor }}
+            ({{ assinatura.get_ciclo_cobranca_display }})
+        </p>
+    </div>
+    <a href="{% url 'detalhar_assinatura' assinatura.pk %}" class="btn btn-outline-secondary">&larr; Voltar</a>
+</div>
+
+<div class="row g-4">
+
+    <!-- Coluna da esquerda: quem participa e quanto cada um paga -->
+    <div class="col-12 col-lg-7">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Participante</th>
+                            <th>Cota</th>
+                            <th>Valor</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- O dono da assinatura sempre participa -->
+                        <tr>
+                            <td>Você ({{ request.user.first_name }})</td>
+                            <td>{{ assinatura.percentual_do_dono }}%</td>
+                            <td>{{ assinatura.moeda }} {{ assinatura.valor_do_dono }}</td>
+                            <td></td>
+                        </tr>
+
+                        {% for d in assinatura.divisoes.all %}
+                        <tr>
+                            <td>
+                                {{ d.pessoa.nome }}
+                                {% if d.pessoa.email %}<br><small class="text-muted">{{ d.pessoa.email }}</small>{% endif %}
+                            </td>
+                            <td>{{ d.percentual_cota }}%</td>
+                            <td>{{ assinatura.moeda }} {{ d.valor_da_cota }}</td>
+                            <td class="text-end">
+                                <!-- Remover é um formulário POST (com token CSRF), não um link -->
+                                <form method="post" action="{% url 'remover_vinculo' assinatura.pk d.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remover</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if not assinatura.divisoes.all %}
+        <p class="text-muted small mt-2">Ninguém foi vinculado ainda: você paga 100% desta assinatura.</p>
+        {% endif %}
+    </div>
+
+    <!-- Coluna da direita: formulário para vincular alguém -->
+    <div class="col-12 col-lg-5">
+        <div class="card p-4">
+            <h2 class="h5 mb-3">Vincular pessoa</h2>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    {{ form.nome.label_tag }}
+                    {{ form.nome }}
+                    {{ form.nome.errors }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+
+                <p class="text-muted small">
+                    Tipo de divisão: <strong>igualitária</strong>. Todos os participantes
+                    (incluindo você) pagam a mesma parte, calculada automaticamente.
+                </p>
+
+                <button type="submit" class="btn btn-primary w-100">Adicionar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

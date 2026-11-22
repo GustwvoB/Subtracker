@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
-from .models import Assinatura, Categoria
-from .forms import AssinaturaForm
+from .models import Assinatura, Categoria, PessoaVinculada, DivisaoAssinatura
+from .forms import AssinaturaForm, VinculoForm
 
 
 # ------------------------------------------------------------------
@@ -218,3 +218,61 @@ def excluir_assinatura(request, id):
         messages.success(request, 'Assinatura excluída com sucesso.')
         return redirect('listar_assinaturas')
     return render(request, 'assinaturas/excluir_assinatura.html', {'assinatura': assinatura})
+
+# ------------------------------------------------------------------
+# UC09 - Vincular Pessoa a uma Assinatura (Divisão de Custo)
+# ------------------------------------------------------------------
+@login_required(login_url='login')
+def dividir_assinatura(request, id):
+    assinatura = buscar_assinatura_do_usuario(request, id)
+
+    if request.method == 'POST':
+        form = VinculoForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            email = form.cleaned_data['email']   # vem '' quando não é informado
+
+            # Reaproveita um contato que ESTE usuário já tenha, para não duplicar pessoas:
+            # - se informou e-mail, procura pelo e-mail;
+            # - se não informou, procura pelo nome (iexact = igual, sem diferenciar maiúsculas).
+            if email:
+                pessoa = PessoaVinculada.objects.filter(usuario_dono=request.user, email__iexact=email).first()
+            else:
+                pessoa = PessoaVinculada.objects.filter(usuario_dono=request.user, nome__iexact=nome).first()
+
+            # Não achou: cadastra uma nova pessoa para este usuário
+            if pessoa is None:
+                pessoa = PessoaVinculada.objects.create(usuario_dono=request.user, nome=nome,
+                                                        email=email or None)
+
+            if DivisaoAssinatura.objects.filter(assinatura=assinatura, pessoa=pessoa).exists():
+                messages.error(request, 'Essa pessoa já participa da divisão desta assinatura.')
+            else:
+                DivisaoAssinatura.objects.create(assinatura=assinatura, pessoa=pessoa,
+                                                 tipo_divisao='IGUALITARIA')
+                assinatura.recalcular_divisoes()   # a cota de todos muda quando entra mais alguém
+                messages.success(request, 'Pessoa vinculada com sucesso.')
+                return redirect('dividir_assinatura', id=assinatura.pk)
+        else:
+            messages.error(request, 'Erro no preenchimento do formulário. Verifique os dados informados.')
+    else:
+        form = VinculoForm()
+
+    return render(request, 'assinaturas/dividir_assinatura.html',
+                  {'assinatura': assinatura, 'form': form})
+
+
+# Remove uma pessoa da divisão (só aceita POST, que vem com o token CSRF)
+@login_required(login_url='login')
+def remover_vinculo(request, id, id_divisao):
+    assinatura = buscar_assinatura_do_usuario(request, id)
+    if id_divisao > 2147483647:   # mesma proteção contra número gigante na URL
+        raise Http404
+    # a divisão precisa pertencer a ESTA assinatura (que já é do usuário logado)
+    divisao = get_object_or_404(DivisaoAssinatura, pk=id_divisao, assinatura=assinatura)
+
+    if request.method == 'POST':
+        divisao.delete()
+        assinatura.recalcular_divisoes()   # os que ficaram passam a pagar mais
+        messages.success(request, 'Pessoa removida da divisão.')
+    return redirect('dividir_assinatura', id=assinatura.pk)

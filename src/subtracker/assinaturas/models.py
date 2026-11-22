@@ -95,6 +95,31 @@ class Assinatura(models.Model):
         # valor x cotação, arredondado em 2 casas
         return (self.valor * cotacao).quantize(Decimal('0.01'))
 
+            # --- Divisão de custos (UC09) ---
+
+    # Recalcula a cota de TODAS as pessoas vinculadas (divisão igualitária).
+    # O dono também é participante: com 2 pessoas vinculadas, são 3 no total.
+    def recalcular_divisoes(self):
+        divisoes = self.divisoes.all()
+        quantidade = divisoes.count()
+        if quantidade > 0:
+            cota = DivisaoAssinatura.calcular_cota_igualitaria(quantidade + 1)
+            divisoes.update(percentual_cota=cota)   # update() altera todas de uma vez
+
+    # Parte do dono = o que SOBRA depois das partes das pessoas vinculadas.
+    # (calcular por "sobra" garante que a soma sempre fecha 100%)
+    def percentual_do_dono(self):
+        total = Decimal('0')
+        for d in self.divisoes.all():
+            total += d.percentual_cota
+        return (Decimal('100') - total).quantize(Decimal('0.01'))   # sempre com 2 casas
+
+    def valor_do_dono(self):
+        total = Decimal('0')
+        for d in self.divisoes.all():
+            total += d.valor_da_cota()
+        return self.valor - total
+
 
 # ---------------------------------------------------------------
 # PessoaVinculada  ->  tabela tb_pessoa_vinculada
@@ -137,6 +162,10 @@ class DivisaoAssinatura(models.Model):
 
     def __str__(self):
         return f"{self.pessoa.nome} - {self.assinatura.nome_servico} ({self.percentual_cota}%)"
+
+    # Quanto esta pessoa paga, na moeda da assinatura: valor x percentual / 100
+    def valor_da_cota(self):
+        return (self.assinatura.valor * self.percentual_cota / 100).quantize(Decimal('0.01'))
 
     # Método do nosso diagrama de classes: calcularCotaIgualitaria(numParticipantes)
     # @staticmethod (visto na aula de Python): não usa self, só recebe o parâmetro.

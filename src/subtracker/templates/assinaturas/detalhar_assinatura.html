@@ -45,6 +45,22 @@
     </dl>
 </div>
 
+<!-- Resumo da divisão de custos (UC09) -->
+<div class="card p-4 mt-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="h5 mb-0">Divisão de custos</h2>
+        <a href="{% url 'dividir_assinatura' assinatura.pk %}" class="btn btn-sm btn-outline-primary">Gerenciar divisão</a>
+    </div>
+    {% if assinatura.divisoes.all %}
+        <p class="mb-0 mt-2">
+            Dividida com {{ assinatura.divisoes.all|length }} pessoa(s).
+            Sua parte: {{ assinatura.moeda }} {{ assinatura.valor_do_dono }}.
+        </p>
+    {% else %}
+        <p class="text-muted mb-0 mt-2">Esta assinatura não é dividida com ninguém.</p>
+    {% endif %}
+</div>
+
 <div class="d-flex gap-2 mt-3">
     <a href="{% url 'alterar_assinatura' assinatura.pk %}" class="btn btn-primary">Editar</a>
     <a href="{% url 'excluir_assinatura' assinatura.pk %}" class="btn btn-outline-danger">Excluir</a>
